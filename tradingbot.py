@@ -34,7 +34,7 @@ class MLTrader(Strategy):
     def get_dates(self):
         today = self.get_datetime()
         three_days_prior = today - Timedelta(days=3)
-        return today.strfttime('%Y-%m-%d'), three_days_prior.strfttime('%Y-%m-%d')
+        return today.strftime('%Y-%m-%d'), three_days_prior.strftime('%Y-%m-%d')
 
     def get_news(self):
         today, three_days_prior = self.get_dates()
