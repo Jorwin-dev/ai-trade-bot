@@ -16,19 +16,29 @@ ALPACA_CREDS = {
 
 class MLTrader(Strategy):
     # BI-Cycle Methods
-    def initialize(self): # Runs once
-        pass
+    def initialize(self, symbol:str="SPY"): # Runs once
+        self.symbol = symbol
+        self.sleeptime = "24H"
+        self.last_trade = None
     def on_trading_iteration(self): # Runs everytime we get new data
-        pass
+        if self.last_trade == None:
+            order = self.create_order(
+                self.symbol,
+                10,
+                "buy",
+                type="market"
+            )
+            self.submit_order(order)
+            self.last_trade = "buy"
 
 start_date = datetime(2023, 12, 15)
 end_date = datetime(2023, 12, 31)
 broker = Alpaca(ALPACA_CREDS)
-strategy = MLTrader(name='mlstrat', broker=broker, parameters={})
+strategy = MLTrader(name='mlstrat', broker=broker, parameters={"symbol":"SPY"})
 
 strategy.backtest(
     YahooDataBacktesting,
     start_date,
     end_date,
-    parameters={}
+    parameters={"symbol":"SPY"}
 )
