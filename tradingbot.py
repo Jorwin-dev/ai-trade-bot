@@ -87,3 +87,7 @@ strategy.backtest(
     end_date,
     parameters={"symbol":"SPY", "cash_at_risk":.5}
 )
+# Allow Live Deployment
+trader = Trader()
+trader.add_strategy(strategy)
+trader.run_all()
